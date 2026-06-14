@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lotus Path · Meditation Progress Dashboard</title>
+<style>
+  :root{
+    --bg:#0f0a1e; --card:rgba(255,255,255,.06); --line:rgba(255,255,255,.12);
+    --ink:#f3effb; --mute:#a99fc7; --accent:#c084fc; --accent2:#f0abfc; --good:#6ee7b7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--ink);
+    min-height:100vh;background:
+      radial-gradient(900px 600px at 80% -10%,rgba(192,132,252,.25),transparent),
+      radial-gradient(700px 500px at 0% 110%,rgba(94,234,212,.18),transparent),
+      var(--bg);
+    overflow-x:hidden;
+  }
+  /* floating ambient petals */
+  .sky{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .sky span{position:absolute;font-size:22px;opacity:.18;animation:rise linear infinite}
+  @keyframes rise{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg)}}
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:40px 22px 60px}
+
+  header{text-align:center;margin-bottom:34px}
+  .lotus{width:96px;height:96px;margin:0 auto 10px;display:block;animation:bloom 6s ease-in-out infinite}
+  @keyframes bloom{0%,100%{transform:scale(.94) rotate(-2deg)}50%{transform:scale(1.06) rotate(2deg)}}
+  h1{font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:.5px;
+     background:linear-gradient(90deg,var(--accent2),var(--accent),var(--good));
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{color:var(--mute);margin-top:8px;font-size:15px}
+
+  .top{display:grid;grid-template-columns:280px 1fr;gap:18px;margin-bottom:24px}
+  @media(max-width:760px){.top{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;
+        backdrop-filter:blur(10px);padding:22px}
+  .ring-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .pct{font-size:30px;font-weight:800}
+  .pct small{font-size:13px;color:var(--mute);font-weight:600}
+  .ring{transform:rotate(-90deg)}
+  .ring .track{stroke:rgba(255,255,255,.1)}
+  .ring .fill{stroke:url(#g);stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:520px){.stats{grid-template-columns:1fr}}
+  .stat{display:flex;flex-direction:column;gap:4px}
+  .stat .n{font-size:26px;font-weight:800}
+  .stat .l{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:1px}
+  .focus{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);font-size:14px;color:var(--mute)}
+  .focus b{color:var(--accent2)}
+
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:2px;color:var(--mute);margin:28px 4px 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+  .pose{position:relative;cursor:pointer;overflow:hidden;transition:transform .25s,border-color .25s}
+  .pose:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .pose .ico{font-size:40px;display:block;margin-bottom:10px;filter:drop-shadow(0 4px 10px rgba(192,132,252,.4))}
+  .pose .nm{font-size:17px;font-weight:700}
+  .pose .sk{font-size:12px;color:var(--accent2);font-style:italic;margin-bottom:8px}
+  .pose .ds{font-size:13px;color:var(--mute);line-height:1.5;min-height:54px}
+  .dots{margin-top:10px;display:flex;gap:5px;align-items:center}
+  .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18)}
+  .dots i.on{background:var(--accent)}
+  .dots span{margin-left:auto;font-size:11px;color:var(--mute)}
+  .check{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;
+         border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:transparent;transition:.25s}
+  .pose.done{border-color:var(--good)}
+  .pose.done .check{background:var(--good);border-color:var(--good);color:#06251a}
+  .pose.done .ico{animation:pop .4s ease}
+  @keyframes pop{50%{transform:scale(1.25)}}
+
+  footer{text-align:center;margin-top:40px;color:var(--mute);font-size:13px}
+  footer b{color:var(--accent2)}
+  .hint{text-align:center;color:var(--mute);font-size:12px;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<div class="wrap">
+
+  <header>
+    <!-- hand-drawn inline SVG lotus -->
+    <svg class="lotus" viewBox="0 0 100 100" aria-label="lotus">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f0abfc"/><stop offset=".5" stop-color="#c084fc"/><stop offset="1" stop-color="#6ee7b7"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#lg)">
+        <path d="M50 20C44 38 44 52 50 64C56 52 56 38 50 20Z"/>
+        <path d="M50 64C40 56 30 50 22 50C26 64 38 70 50 68Z" opacity=".9"/>
+        <path d="M50 64C60 56 70 50 78 50C74 64 62 70 50 68Z" opacity=".9"/>
+        <path d="M50 66C36 64 24 60 16 56C20 72 36 80 50 76Z" opacity=".7"/>
+        <path d="M50 66C64 64 76 60 84 56C80 72 64 80 50 76Z" opacity=".7"/>
+      </g>
+      <ellipse cx="50" cy="80" rx="40" ry="6" fill="#6ee7b7" opacity=".25"/>
+    </svg>
+    <h1>Lotus Path</h1>
+    <p class="tag">Your guided journey to Full Lotus (Padmasana) — one mindful hip-opener at a time.</p>
+  </header>
+
+  <section class="top">
+    <div class="card ring-card">
+      <svg width="150" height="150" class="ring">
+        <circle class="track" cx="75" cy="75" r="60" fill="none" stroke-width="12"/>
+        <circle class="fill" id="ring" cx="75" cy="75" r="60" fill="none" stroke-width="12"
+                stroke-dasharray="377" stroke-dashoffset="377"/>
+      </svg>
+      <div class="pct"><span id="pctNum">0</span>% <small>to Full Lotus</small></div>
+    </div>
+
+    <div class="card">
+      <div class="stats">
+        <div class="stat"><span class="n">12</span><span class="l">Day streak 🔥</span></div>
+        <div class="stat"><span class="n">340</span><span class="l">Minutes sat 🧘</span></div>
+        <div class="stat"><span class="n" id="flex">B+</span><span class="l">Hip mobility</span></div>
+      </div>
+      <p class="focus">🌅 <b>Today's focus:</b> 8 min of Butterfly with slow breathing. Let the knees fall — never force. Progress is patience.</p>
+    </div>
+  </section>
+
+  <h2>The Path · tap a pose when you can hold it for 5 minutes</h2>
+  <div class="grid" id="grid"></div>
+  <p class="hint">Your progress is saved on this device.</p>
+
+  <footer>Crafted with calm by <b>Claude</b> 🪷 — inline SVG, CSS animation & interactivity, zero dependencies.</footer>
+</div>
+
+<script>
+const POSES=[
+  {i:"🧘",n:"Easy Pose",s:"Sukhasana",d:"Shins crossed, spine tall. The calm foundation every sit begins from.",lvl:1},
+  {i:"🦋",n:"Butterfly",s:"Baddha Konasana",d:"Soles together, knees drift down. Gently wakes the inner hips.",lvl:2},
+  {i:"🪷",n:"Half Lotus",s:"Ardha Padmasana",d:"One foot rests atop the opposite thigh. Balance both sides daily.",lvl:3},
+  {i:"🕊️",n:"Pigeon",s:"Eka Pada Kapotasana",d:"Deep external rotation — the key that unlocks the full pose.",lvl:4},
+  {i:"✨",n:"Full Lotus",s:"Padmasana",d:"Both feet cradled on the thighs. Stillness, sealed. The summit.",lvl:5},
+];
+const KEY="lotus-path", done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
+const grid=document.getElementById("grid");
+const ring=document.getElementById("ring"), C=377;
+
+POSES.forEach((p,idx)=>{
+  const el=document.createElement("div");
+  el.className="card pose"+(done.has(idx)?" done":"");
+  el.innerHTML=`<div class="check">✓</div>
+    <span class="ico">${p.i}</span>
+    <div class="nm">${p.n}</div>
+    <div class="sk">${p.s}</div>
+    <div class="ds">${p.d}</div>
+    <div class="dots">${[1,2,3,4,5].map(n=>`<i class="${n<=p.lvl?'on':''}"></i>`).join("")}<span>Lv ${p.lvl}</span></div>`;
+  el.onclick=()=>{done.has(idx)?done.delete(idx):done.add(idx);el.classList.toggle("done");save();};
+  grid.appendChild(el);
+});
+
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]));render();}
+function render(){
+  const pct=Math.round(done.size/POSES.length*100);
+  ring.style.strokeDashoffset=C-(C*pct/100);
+  document.getElementById("pctNum").textContent=pct;
+  const grades=["C","C+","B","B+","A","A+"];
+  document.getElementById("flex").textContent=grades[done.size];
+}
+render();
+
+// ambient petals
+const sky=document.getElementById("sky"),P=["🪷","🌸","✿","❀"];
+for(let k=0;k<14;k++){const s=document.createElement("span");
+  s.textContent=P[k%P.length];s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(12+Math.random()*14)+"s";
+  s.style.animationDelay=(-Math.random()*20)+"s";
+  s.style.fontSize=(14+Math.random()*22)+"px";sky.appendChild(s);}
+</script>
+</body>
+</html>
