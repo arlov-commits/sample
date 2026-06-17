@@ -70,6 +70,60 @@
   .pose.done .ico{animation:pop .4s ease}
   @keyframes pop{50%{transform:scale(1.25)}}
 
+  /* safe-start steps */
+  .steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .step{display:flex;gap:12px;align-items:flex-start}
+  .step .e{font-size:24px;line-height:1.2}
+  .step .t{font-size:13px;color:var(--mute);line-height:1.5}
+  .step .t b{color:var(--ink);display:block;margin-bottom:2px;font-size:15px}
+  /* readiness gate on pose cards */
+  .gate{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--accent2);line-height:1.5}
+  .gate b{color:var(--ink)}
+  /* body signals */
+  .signals{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.signals{grid-template-columns:1fr}}
+  .sig h3{font-size:15px;margin-bottom:14px}
+  .sig ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .sig li{font-size:13px;color:var(--mute);line-height:1.45;padding-left:24px;position:relative}
+  .sig li:before{position:absolute;left:0;top:-1px;font-weight:700}
+  .green{border-color:rgba(110,231,183,.4)} .green h3{color:var(--good)}
+  .green li:before{content:"✓";color:var(--good)}
+  .red{border-color:rgba(248,113,113,.45)} .red h3{color:#fca5a5}
+  .red li:before{content:"✕";color:#fca5a5}
+  .rule{margin:16px 4px 0;font-size:13px;color:var(--mute);line-height:1.6;text-align:center}
+  .rule b{color:var(--accent2)}
+  .disc{text-align:center;color:var(--mute);font-size:11px;margin-top:22px;opacity:.7;line-height:1.55}
+  /* 5-week program */
+  .weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:16px}
+  .wk-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .badge{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+         font-weight:800;font-size:18px;color:#1a0f2e;background:linear-gradient(135deg,var(--accent2),var(--accent))}
+  .wk h4{font-size:16px}
+  .wk .sub{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:1px}
+  .wk ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .wk li{font-size:13px;color:var(--mute);line-height:1.45;padding-left:16px;position:relative}
+  .wk li:before{content:"";position:absolute;left:2px;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .wk .goal{font-size:12.5px;color:var(--good);background:rgba(110,231,183,.08);
+            border:1px solid rgba(110,231,183,.2);border-radius:10px;padding:8px 10px;line-height:1.4}
+  .note-card{display:flex;align-items:center;justify-content:center}
+  .note-card p{font-size:13px;color:var(--mute);line-height:1.6;text-align:center}
+  .note-card b{color:var(--accent2)}
+  /* daily notes journal */
+  .journal textarea{width:100%;min-height:84px;resize:vertical;border-radius:14px;padding:12px 14px;
+     font:inherit;font-size:14px;color:var(--ink);background:rgba(0,0,0,.25);border:1px solid var(--line);outline:none}
+  .journal textarea:focus{border-color:var(--accent)}
+  .jrow{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:10px}
+  .jdate{font-size:12px;color:var(--mute)}
+  .journal button{border:none;cursor:pointer;font:inherit;font-weight:700;font-size:13px;color:#1a0f2e;
+     padding:9px 18px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));transition:transform .15s}
+  .journal button:active{transform:scale(.96)}
+  .log{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+  .entry{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:12px;padding:11px 14px;position:relative}
+  .entry .d{font-size:11px;color:var(--accent2);font-weight:700;letter-spacing:.5px;margin-bottom:4px}
+  .entry .x{position:absolute;top:9px;right:11px;cursor:pointer;color:var(--mute);font-size:14px;line-height:1}
+  .entry .x:hover{color:#fca5a5}
+  .entry p{font-size:13.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word;padding-right:16px}
+  .empty{font-size:13px;color:var(--mute);text-align:center;padding:8px}
   footer{text-align:center;margin-top:40px;color:var(--mute);font-size:13px}
   footer b{color:var(--accent2)}
   .hint{text-align:center;color:var(--mute);font-size:12px;margin-top:6px}
@@ -123,20 +177,119 @@
     </div>
   </section>
 
-  <h2>The Path · tap a pose when you can hold it for 5 minutes</h2>
+  <h2>Start Safely · six rules that protect your knees</h2>
+  <div class="card steps">
+    <div class="step"><span class="e">🔥</span><span class="t"><b>Warm up first</b>Never fold cold hips. Spend ~5 min in Butterfly and gentle knee rocks before any lotus shape.</span></div>
+    <div class="step"><span class="e">🪑</span><span class="t"><b>Lift your seat</b>Sit on a firm cushion so the knees settle at or below hip level — it tilts the pelvis and frees the hips.</span></div>
+    <div class="step"><span class="e">🦴</span><span class="t"><b>Turn from the hip</b>The opening is external rotation of the hip joint. The knee is a hinge — it must never twist to get there.</span></div>
+    <div class="step"><span class="e">⚖️</span><span class="t"><b>Even both sides</b>Alternate which leg sits on top each session so the hips open symmetrically.</span></div>
+    <div class="step"><span class="e">🌬️</span><span class="t"><b>Breathe &amp; soften</b>Exhale and let gravity do the work. Forcing closes the hips; patient, relaxed time opens them.</span></div>
+    <div class="step"><span class="e">🚪</span><span class="t"><b>Know the exit</b>Release slowly the instant a red-flag signal appears. Backing out early is how you progress faster.</span></div>
+  </div>
+
+  <h2>The Path · tap a pose when you can hold it calmly for 5 minutes</h2>
   <div class="grid" id="grid"></div>
   <p class="hint">Your progress is saved on this device.</p>
 
-  <footer>Crafted with calm by <b>Claude</b> 🪷 — inline SVG, CSS animation & interactivity, zero dependencies.</footer>
+  <h2>Body Signals · learn the difference before you deepen</h2>
+  <div class="signals">
+    <div class="card sig green">
+      <h3>🟢 Good — keep going (ease off if it gets intense)</h3>
+      <ul>
+        <li>A broad, warm stretch across the hips, groin or inner thighs</li>
+        <li>The sensation softens as you breathe and relax into it</li>
+        <li>Mild muscle fatigue that fades within a day — ordinary soreness</li>
+        <li>Both sides feel roughly similar over the weeks</li>
+      </ul>
+    </div>
+    <div class="card sig red">
+      <h3>🔴 Stop now — back out slowly</h3>
+      <ul>
+        <li>Sharp, pinching or shooting pain — <b>especially in the knee</b></li>
+        <li>Any pain inside the knee joint or around the kneecap</li>
+        <li>Numbness, tingling or "pins &amp; needles" in the feet or legs</li>
+        <li>Pain that lingers or worsens hours or a day later</li>
+        <li>Clicking with pain, swelling, or a feeling of instability</li>
+      </ul>
+    </div>
+  </div>
+  <p class="rule"><b>Rule of thumb:</b> muscles stretch (dull, broad, tolerable) — joints should not (sharp, pinpoint = danger). Knee pain is never part of lotus. When in doubt, ease out.</p>
+  <p class="rule">🩹 <b>Felt soreness after a sit?</b> Gentle, dull muscle soreness for a day or two after new stretching is normal — move lightly and hydrate. <b>Knee pain, joint pain or swelling is not</b> — rest it, drop back a stage, and don't push through. Sharp or lasting knee pain means see a physio before continuing.</p>
+  <p class="disc">Educational guidance from your Lotus Path dashboard — not medical advice. If you have a knee, hip or back condition, check with a professional before practising.</p>
+
+  <h2>Your 5-Week Foundation Program · ~10–15 min, 5–6 days a week</h2>
+  <div class="weeks">
+    <div class="card wk">
+      <div class="wk-head"><span class="badge">1</span><div><h4>Settle &amp; Assess</h4><span class="sub">~10 min</span></div></div>
+      <ul>
+        <li>5 min seated breathing in Easy Pose on a firm cushion</li>
+        <li>5 min Butterfly — soften the groin, no bouncing</li>
+        <li>Note your baseline: how high do the knees float?</li>
+      </ul>
+      <div class="goal">🎯 Sit 5 min calm and mark your starting point.</div>
+    </div>
+    <div class="card wk">
+      <div class="wk-head"><span class="badge">2</span><div><h4>Open the Hips</h4><span class="sub">~12 min</span></div></div>
+      <ul>
+        <li>Warm up: 4 min Butterfly + slow knee rocks</li>
+        <li>Reclined figure-4 (ankle over knee), 1–2 min each side</li>
+        <li>6 min Easy Pose, spine tall, alternate the top shin</li>
+      </ul>
+      <div class="goal">🎯 Knees drop lower in Butterfly; sit 8 min with ease.</div>
+    </div>
+    <div class="card wk">
+      <div class="wk-head"><span class="badge">3</span><div><h4>Meet Quarter Lotus</h4><span class="sub">~13 min</span></div></div>
+      <ul>
+        <li>Warm up 5 min (Butterfly + figure-4)</li>
+        <li>Quarter Lotus — foot on the opposite calf, 1–2 min each side</li>
+        <li>Finish in Easy Pose, switching the top leg</li>
+      </ul>
+      <div class="goal">🎯 Quarter Lotus 2 min per side, fully pain-free.</div>
+    </div>
+    <div class="card wk">
+      <div class="wk-head"><span class="badge">4</span><div><h4>Toward Half Lotus</h4><span class="sub">~15 min</span></div></div>
+      <ul>
+        <li>Warm up + 1–2 min gentle Pigeon each side</li>
+        <li>Quarter Lotus held up to 5 min per side</li>
+        <li>Test Half Lotus only if the knee rests low: 30–60 s/side, then release</li>
+      </ul>
+      <div class="goal">🎯 Easy Quarter Lotus 5 min; a calm taste of Half Lotus.</div>
+    </div>
+    <div class="card wk">
+      <div class="wk-head"><span class="badge">5</span><div><h4>Consolidate &amp; Balance</h4><span class="sub">~15 min</span></div></div>
+      <ul>
+        <li>Full warm-up: Butterfly, figure-4, Pigeon</li>
+        <li>Half Lotus building both sides, 1–3 min per side</li>
+        <li>Close with 5 min still in your best comfortable pose</li>
+      </ul>
+      <div class="goal">🎯 Half Lotus both sides, no knee strain — foundation set.</div>
+    </div>
+    <div class="card wk note-card">
+      <p>🌱 <b>Reality check:</b> most bodies need months, not weeks, to reach Full Lotus safely. Repeat Weeks 3–5 as a cycle until Half Lotus is effortless on both sides — then Padmasana follows. Patience is the practice.</p>
+    </div>
+  </div>
+
+  <h2>Daily Notes · how did today's sit feel?</h2>
+  <div class="card journal">
+    <textarea id="note" placeholder="e.g. Held Butterfly 6 min — right hip looser, left knee still floats high. No pain, felt calm. 🌿"></textarea>
+    <div class="jrow">
+      <span class="jdate" id="today"></span>
+      <button id="saveNote">Save entry</button>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+
+  <footer>Crafted with calm by <b>Claude</b> 🪷 — inline SVG, CSS animation, local-saved tracker &amp; journal — zero dependencies.</footer>
 </div>
 
 <script>
 const POSES=[
-  {i:"🧘",n:"Easy Pose",s:"Sukhasana",d:"Shins crossed, spine tall. The calm foundation every sit begins from.",lvl:1},
-  {i:"🦋",n:"Butterfly",s:"Baddha Konasana",d:"Soles together, knees drift down. Gently wakes the inner hips.",lvl:2},
-  {i:"🪷",n:"Half Lotus",s:"Ardha Padmasana",d:"One foot rests atop the opposite thigh. Balance both sides daily.",lvl:3},
-  {i:"🕊️",n:"Pigeon",s:"Eka Pada Kapotasana",d:"Deep external rotation — the key that unlocks the full pose.",lvl:4},
-  {i:"✨",n:"Full Lotus",s:"Padmasana",d:"Both feet cradled on the thighs. Stillness, sealed. The summit.",lvl:5},
+  {i:"🧘",n:"Easy Pose",s:"Sukhasana",d:"Shins crossed, spine tall. The calm foundation every sit begins from.",lvl:1,g:"<b>Start today.</b> Sit on a cushion so both knees rest at or below hip height."},
+  {i:"🦋",n:"Butterfly",s:"Baddha Konasana",d:"Soles together, knees drift toward the floor. Wakes the inner hips.",lvl:2,g:"<b>Begin now, daily.</b> Your main opener — let knees fall, never bounce them."},
+  {i:"🌗",n:"Quarter Lotus",s:"Quarter Padmasana",d:"One foot drawn up onto the opposite calf — a gentle first taste of lotus.",lvl:2,g:"<b>When</b> Easy Pose feels effortless for 5+ min with knees relaxed and low."},
+  {i:"🪷",n:"Half Lotus",s:"Ardha Padmasana",d:"One foot rests on the opposite thigh, the other tucked beneath.",lvl:3,g:"<b>When</b> your raised knee in Quarter Lotus settles low, pain-free. Train BOTH sides."},
+  {i:"🕊️",n:"Pigeon",s:"Eka Pada Kapotasana",d:"Deep external hip rotation — the bridge that unlocks the full pose.",lvl:4,g:"<b>Support pose.</b> Build alongside Half Lotus to open the hips further."},
+  {i:"✨",n:"Full Lotus",s:"Padmasana",d:"Both feet cradled on the thighs. Stillness, sealed. The summit.",lvl:5,g:"<b>Only when</b> Half Lotus is easy on BOTH sides for 5+ min with zero knee strain."},
 ];
 const KEY="lotus-path", done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
 const grid=document.getElementById("grid");
@@ -150,7 +303,8 @@ POSES.forEach((p,idx)=>{
     <div class="nm">${p.n}</div>
     <div class="sk">${p.s}</div>
     <div class="ds">${p.d}</div>
-    <div class="dots">${[1,2,3,4,5].map(n=>`<i class="${n<=p.lvl?'on':''}"></i>`).join("")}<span>Lv ${p.lvl}</span></div>`;
+    <div class="dots">${[1,2,3,4,5].map(n=>`<i class="${n<=p.lvl?'on':''}"></i>`).join("")}<span>Lv ${p.lvl}</span></div>
+    <div class="gate">${p.g}</div>`;
   el.onclick=()=>{done.has(idx)?done.delete(idx):done.add(idx);el.classList.toggle("done");save();};
   grid.appendChild(el);
 });
@@ -160,7 +314,7 @@ function render(){
   const pct=Math.round(done.size/POSES.length*100);
   ring.style.strokeDashoffset=C-(C*pct/100);
   document.getElementById("pctNum").textContent=pct;
-  const grades=["C","C+","B","B+","A","A+"];
+  const grades=["C","C","C+","B","B+","A","A+"];
   document.getElementById("flex").textContent=grades[done.size];
 }
 render();
@@ -172,6 +326,30 @@ for(let k=0;k<14;k++){const s=document.createElement("span");
   s.style.animationDuration=(12+Math.random()*14)+"s";
   s.style.animationDelay=(-Math.random()*20)+"s";
   s.style.fontSize=(14+Math.random()*22)+"px";sky.appendChild(s);}
+
+// daily notes journal — saved on this device
+const NKEY="lotus-notes";
+let notes=JSON.parse(localStorage.getItem(NKEY)||"[]");
+const today=new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+document.getElementById("today").textContent=today;
+const logEl=document.getElementById("log"), noteEl=document.getElementById("note");
+function renderLog(){
+  logEl.innerHTML = notes.length ? "" : '<div class="empty">No notes yet — your first reflection lands here.</div>';
+  notes.forEach((e,i)=>{
+    const d=document.createElement("div");d.className="entry";
+    d.innerHTML=`<span class="x" title="delete">✕</span><div class="d"></div><p></p>`;
+    d.querySelector(".d").textContent=e.d;
+    d.querySelector("p").textContent=e.t;
+    d.querySelector(".x").onclick=()=>{notes.splice(i,1);saveNotes();};
+    logEl.appendChild(d);
+  });
+}
+function saveNotes(){localStorage.setItem(NKEY,JSON.stringify(notes));renderLog();}
+document.getElementById("saveNote").onclick=()=>{
+  const t=noteEl.value.trim(); if(!t)return;
+  notes.unshift({d:today,t}); noteEl.value=""; saveNotes();
+};
+renderLog();
 </script>
 </body>
 </html>
